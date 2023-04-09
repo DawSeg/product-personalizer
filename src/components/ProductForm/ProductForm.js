@@ -1,24 +1,35 @@
-import styles from './ProductForm.module.scss';
-import Button from '../Button/Button';
-import OptionSize from '../OptionSize/OptionSize';
-import OptionColor from '../OptionColor/OptionColor';
-import PropTypes from 'prop-types';
+import styles from "./ProductForm.module.scss";
+import Button from "../Button/Button";
+import OptionSize from "../OptionSize/OptionSize";
+import OptionColor from "../OptionColor/OptionColor";
+import PropTypes from "prop-types";
+import { useMemo } from "react";
 
 const ProductForm = (props) => {
-  
-  const getPrice = () => {
-    return props.basePrice + props.currentPrice;
+
+  const addPrice = (a, b) => {
+    return a + b;
   };
 
-  const cartSummary = e => {
+  const getPrice = useMemo(
+    () => addPrice(props.basePrice, props.currentPrice),
+    [props.basePrice, props.currentPrice]
+  );
+
+  const cartSummary = (e) => {
     e.preventDefault();
-    console.log(' Cart:', '\n',
-     props.title, '\n',
-    'Price: ' + getPrice(), '\n',
-    'Size: ' + props.currentSize, '\n',
-    'Color: ' + props.currentColor
+    console.log(
+      " Cart:",
+      "\n",
+      props.title,
+      "\n",
+      "Price: " + getPrice,
+      "\n",
+      "Size: " + props.currentSize,
+      "\n",
+      "Color: " + props.currentColor
     );
-}
+  };
 
   return (
     <form onSubmit={cartSummary}>
@@ -34,8 +45,8 @@ const ProductForm = (props) => {
         currentColor={props.currentColor}
         setCurrentColor={props.setCurrentColor}
       />
-      <Button className={styles.button} type={'submit'}>
-        <span className='fa fa-shopping-cart' />
+      <Button className={styles.button} type={"submit"}>
+        <span className="fa fa-shopping-cart" />
       </Button>
     </form>
   );
